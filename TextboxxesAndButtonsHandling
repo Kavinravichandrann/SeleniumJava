@@ -1,0 +1,136 @@
+package letCodePractice;
+
+
+import java.awt.Rectangle;
+import java.lang.classfile.instruction.NewMultiArrayInstruction;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.interactions.Actions;
+
+public class UptoButtonHandling {
+
+	@SuppressWarnings("unused")
+	public static void main(String[] args) throws InterruptedException {
+
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://letcode.in/test");
+//Entering Values in the text box		
+		WebElement workspace = driver.findElement(By.xpath("//a[contains(text(), 'Edit')]"));
+			workspace.click();
+			WebElement name =  driver.findElement(By.id("fullName"));
+			name.sendKeys("Kavin Ravichandran");
+//Printing the entered value		
+			String value = name.getAttribute("value");
+			System.out.println("Entered value is : " + value);
+//To Append values in the text box
+		WebElement join = driver.findElement(By.id("join"));
+			join.sendKeys(" at learning ");
+			
+			String value2 = join.getAttribute("value");
+			System.out.println("Append value : " + value2);
+//To Print the existing text in console		
+		WebElement getText = driver.findElement(By.id("getMe"));
+			String getText2 = getText.getAttribute("value");
+			System.out.println("Existing text : " + getText2);		
+//To clear the existing text		
+		WebElement clear = driver.findElement(By.id("clearMe"));
+			clear.clear();
+			String clearMe = clear.getAttribute("value");
+			System.out.println("Text Exist 'Clear' :" + clearMe);
+		
+		WebElement disabled  = driver.findElement(By.id("noEdit"));
+// To check whether the box is disabled	
+			disabled.isEnabled();
+			if (disabled.isEnabled())
+				System.out.println("Enabled");
+			else {
+				System.out.println("This text box is disabled");
+			}		
+//To check the box is editable or not		
+		WebElement check = driver.findElement(By.id("dontwrite"));
+			check.sendKeys("Test");
+			String elem = check.getAttribute("value");
+			if (elem.equals("Test")) {
+				System.out.println("Editable and the entered value is :" + elem);
+				
+			} else {
+				System.out.println("Sorry this text box is not editable");
+			}
+//Navigating to the home screen
+		driver.navigate().back();
+		String title = driver.getCurrentUrl();
+		System.out.println(title);
+		if (title.equals("https://letcode.in/test")) {
+			System.out.println("Returned to home page");
+		}else {
+			System.out.println("Oops not returned");
+		}
+		
+//Buttons-----------------------------
+		WebElement buttonTab = driver.findElement(By.xpath("/html/body/app-root/app-test-site/section[2]/div/div/div/div[2]/app-menu/div/footer/a"));
+		buttonTab.click();
+		String btnUrl = driver.getCurrentUrl();
+		System.out.println(btnUrl);
+//To Navigate back
+		driver.navigate().back();
+		String back = driver.getTitle();
+		System.out.println("Returned back to home screen and the Title is :" + back);
+//To Forward again 
+		driver.navigate().forward();
+		String ret = driver.getTitle();
+		System.out.println("Navigated to the button fields again and the Title is :"+ ret);
+//To confirm it is fowarded
+		WebElement returned = driver.findElement(By.id("home"));
+		String att = returned.getText();
+		System.out.println("The text entered in the button is : "+att); 	
+//To get X Y location
+		WebElement loc = driver.findElement(By.id("position"));
+		Point locationXY = loc.getLocation();
+		System.out.println("X Y Location of the button is :" + locationXY);
+//To get the color of the selected element
+		WebElement color = driver.findElement(By.id("color"));
+		String clr = color.getCssValue("color");
+		System.out.println("RGBA value for the selected element : " + clr);
+//To get the Dimension of the selected element
+	//	WebElement size = driver.findElement(By.id("property"));
+		org.openqa.selenium.Rectangle size = driver.findElement(By.id("property")).getRect();
+		Dimension siz = size.getDimension();
+	    int height = siz.getHeight();
+	    int width = siz.getWidth();
+		System.out.println("Height for the selected element : " + height);
+		System.out.println("Width for the selected element : " + width);
+//To verify whether the button is disabled
+		WebElement disable = driver.findElement(By.id("isDisabled"));
+		Boolean dis = disable.isEnabled();
+		System.out.println("Is enabled  :" + dis);
+		
+		Actions action = new Actions(driver);
+		
+		WebElement hold = driver.findElement(By.id("isDisabled"));
+	//	String holdTxt = hold.click;
+	//	String txtBfrHold = hold.getText();
+	//	System.out.println(txtBfrHold);
+	//	action.moveToElement(hold);
+		action.clickAndHold(hold).perform();
+	//	WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
+	//	wait.until(ExpectedConditions.textToBePresentInElement(hold, "Button has been long pressed"));
+	//	Thread.sleep(9000);
+		//action.moveToElement(hold);
+		String txtAfterHold = hold.getText();
+		System.out.println("Text after long press : "+ txtAfterHold);
+			
+		
+		driver.quit();
+	}
+	
+}

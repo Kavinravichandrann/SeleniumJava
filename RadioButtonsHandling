@@ -1,0 +1,101 @@
+package letCodePractice;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Wait;
+
+public class RadioButtons {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+	WebDriver driver = new ChromeDriver();
+	driver.get("https://letcode.in/radio");
+	WebElement rdo1 = driver.findElement(By.xpath("//label[@class= 'label']"));
+	WebElement yes = driver.findElement(By.id("yes"));
+	yes.click();
+	boolean verification = yes.isSelected();
+	System.out.println("IsSelected Yes : "+ verification);
+// To verify only one radio button is selected
+	
+	WebElement one = driver.findElement(By.id("one"));
+	one.click();
+	WebElement two = driver.findElement(By.id("two"));
+	two.click();
+	
+	boolean verify1 = one.isSelected();
+	boolean verify2 = two.isSelected();
+	if ((verify1&&!verify2)||(!verify1&&verify2)) {
+		System.out.println("Passed ! Only one is selected");
+		
+	}else {
+		System.out.println("Failed ! both are selected");
+	}
+	
+//To find the bug that the both check boxes are checked
+	
+	WebElement bug1 = driver.findElement(By.id("nobug"));
+	bug1.click();
+	WebElement bug2 = driver.findElement(By.id("bug"));
+	bug2.click();
+	
+	Boolean bugg1 = bug1.isSelected();
+	Boolean bugg2 = bug2.isSelected();
+	
+	if((bugg1&&bugg2)||(bugg2&&bugg1)) {
+		System.out.println("Yes its a bug, both the radio buttons were selected");
+	}else {
+		System.out.println("No issues! Only one radio button is selected");
+	}
+	
+// To find which one is selected
+	WebElement foo = driver.findElement(By.id("foo"));
+	Boolean foo1 = foo.isSelected();
+	
+	WebElement notFoo = driver.findElement(By.id("notfoo"));
+	Boolean notFoo1 = notFoo.isSelected();
+	
+	if(foo1 == true) {
+		System.out.println("Foo is selected");
+	}else if (notFoo1==true) {
+		System.out.println("Bar is Selected");
+	}else {
+		System.out.println("Nothing is Selected");
+	}
+	
+// To verify which one is disabled
+	
+	WebElement going = driver.findElement(By.id("going"));
+	WebElement notGoing = driver.findElement(By.id("notG"));
+	WebElement maybe = driver.findElement(By.id("maybe"));
+	Boolean go = going.isEnabled();
+	Boolean notGo = notGoing.isEnabled();
+	Boolean may = maybe.isEnabled();
+	
+	if (go==false) {
+		System.out.println("Going is disabled");
+		
+	} else if (notGo==false) {
+		System.out.println("NotGoing is disabled");
+		
+	} else if (may==false) {
+		System.out.println("MayBe button is disabled");
+		
+	} else {
+		System.out.println("Nothing is disabled");
+	}
+		
+	WebElement remCheck = driver.findElement(By.xpath("/html/body/app-root/app-radio-check/section[1]/div/div/div[1]/div/div/div[6]/label[2]/input"));
+	Boolean rem = remCheck.isSelected();
+	
+	if (rem==true) {
+		System.out.println("Remember check box is selected");
+	} else {
+		System.out.println("Remember checkbox is not selected");
+	}
+	WebElement agree = driver.findElement(By.xpath("/html/body/app-root/app-radio-check/section[1]/div/div/div[1]/div/div/div[7]/label[2]/input"));
+	agree.click();
+}
+	
+}

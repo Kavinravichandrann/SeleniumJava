@@ -1,0 +1,53 @@
+package letCodePractice;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class DropDown {
+	
+	 public static void main(String[] args) {
+		 
+		 WebDriver driver = new ChromeDriver();
+		 driver.get("https://letcode.in/dropdowns");
+		 WebElement apple = driver.findElement(By.id("fruits"));
+		 Select select= new Select(apple);
+		 select.selectByVisibleText("Apple");
+		 WebElement selectedFruit = driver.findElement(By.xpath("/html/body/app-root/app-dropdowns/section[1]/div/div/div[1]/div/div/div[1]/div/div[2]/div/p"));
+		 String selectedconfrm = selectedFruit.getText();
+		 System.out.println(selectedconfrm);
+		 
+		 WebElement scroll = driver.findElement(By.id("superheros"));
+		 Select hero = new Select(scroll);
+		 hero.selectByValue("im");
+		 WebElement sel = driver.findElement(By.xpath("/html/body/app-root/app-dropdowns/section[1]/div/div/div[1]/div/div/div[2]/div/div[2]/div"));		 
+		 String cnf = sel.getText();
+		 System.out.println(cnf);
+//Select the last element present in the drop down		 
+		 WebElement lang = driver.findElement(By.id("lang"));
+		// lang.click();
+		 Select langu = new Select(lang);
+		 int last =  langu.getOptions().size();
+		 langu.selectByIndex(last - 1);
+		 String lastElement = langu.getFirstSelectedOption().getText();
+		// WebElement lastLanguage = driver.findElement(By.xpath("/html/body/app-root/app-dropdowns/section[1]/div/div/div[1]/div/div/div[2]/div/div[2]/div/p"));
+		// String l = lastLanguage.getText();
+		 System.out.println("Last language is :" + lastElement );
+		 
+ //Selecting India by using value
+		 
+		 WebElement country = driver.findElement(By.id("country"));
+		 Select countries = new Select(country);
+		 countries.selectByValue("India");
+		 String ind = countries.getFirstSelectedOption().getText();
+		 System.out.println("Selected Country is : " + ind);
+		 
+		 driver.quit();
+	 }
+	
+	
+
+}

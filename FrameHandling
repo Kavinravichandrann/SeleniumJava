@@ -1,0 +1,31 @@
+package letCodePractice;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Frames {
+
+	public static void main(String[] args) {
+
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://letcode.in/frame");
+		driver.switchTo().frame(0);
+		WebElement firstname = driver.findElement(By.xpath("//input[@name='fname']"));
+		firstname.sendKeys("Kavin");
+		WebElement lastName = driver.findElement(By.xpath("//input[@name='lname']"));
+		lastName.sendKeys("Ravichandran");
+		WebElement getTxt = driver.findElement(By.xpath("//p[@class='title has-text-info']"));
+		String enteredValue = getTxt.getText();
+		System.out.println(enteredValue);
+	//	driver.switchTo().parentFrame();
+		WebElement mail= driver.findElement(By.xpath("//iframe[@src='innerFrame']"));
+		driver.switchTo().frame(mail);
+		driver.findElement(By.name("email")).sendKeys("Kavinravichandran025@gmail.com");
+		
+		driver.quit();
+	}
+
+}
